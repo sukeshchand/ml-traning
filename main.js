@@ -41,8 +41,11 @@ function draw() {
     stroke("green");
     fill(255);
     textSize(16);
-    text('Temperature   --->', 250, 395);
-    translate(12, 300);
+    text('0', 5, 390);
+    text('100', 3, 25);
+    text('40°C', 355, 395);
+    text('Temperature   --->', 220, 395);
+    translate(12, 160);
     rotate(55);
     text('Sales Count   --->', 0,0);
 }

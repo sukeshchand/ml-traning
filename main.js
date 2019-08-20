@@ -10,8 +10,6 @@ function setup() {
     var canvas = createCanvas(400, 400);
     canvas.parent('divCanvas');
     background("green");
-
-
 }
 
 function mousePressed() {
@@ -31,7 +29,7 @@ function draw() {
         var x = map(data[i].x, 0, 1, 0, width);
         var y = map(data[i].y, 0, 1, height, 0);
         fill(255);
-        stroke(255);
+        stroke("yellow");
         ellipse(x, y, 8, 8);
     }
     stroke("red");
@@ -60,5 +58,5 @@ function getPointY(slopParam, xParam, bParam) {
 }
 
 function appendToTable(tableId, col1, col2) {
-    $(tableId + ' tr:last').after('<tr><td>' + col1 + '</td><td>' + col2 + '</td></tr>');
+    $(tableId + ' tr:nth-child(1)').after('<tr><td>' + col1 + '</td><td>' + col2 + '</td></tr>');
 }

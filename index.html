@@ -7,15 +7,14 @@
     <script language="javascript" type="text/javascript" src="libraries/jquery.min.js"></script>
     <script language="javascript" type="text/javascript" src="main.js"></script>
     <style>
-        #tableData td{
-            border: solid 1px #ccc;
-            padding: 5px;
+        #tableData th, td {
+            border: 1px solid #CCC;
         }
     </style>
 </head>
 
 <body>
-    <table style="border:1px solid #ccc">
+    <table >
         <tr>
             <td style="vertical-align: top;">
                 <div id="divCanvas">
@@ -26,10 +25,10 @@
                 <div style="height:500px; overflow-y:scroll;">
                     <table id="tableData">
                         <tr>
-                            <td>
+                            <th>
                                 Temperature
                             </td>
-                            <td>
+                            <th>
                                 Count
                             </td>
                         </tr>
@@ -40,4 +39,5 @@
     </table>
 
 </body>
+
 </html>

@@ -43,6 +43,8 @@ function draw() {
     text('100', 3, 25);
     text('40°C', 355, 395);
     text('Temperature   --->', 220, 395);
+    
+    linearRegression();    
     drawLine();
 
     fill(255);
@@ -53,11 +55,6 @@ function draw() {
 }
 
 function linearRegression() {
-
-}
-
-function drawLine() {
-
     var xSum = 0;
     var ySum = 0;
     for (i = 0; i < data.length; i++) {
@@ -79,6 +76,9 @@ function drawLine() {
 
     slop = numerator / denominator; // slop is the m variable in the formula - y = mx + b
     yIntercept = yMean - slop * xMean; // yIntercept is the b variable in the formula - y = mx + b
+}
+
+function drawLine() {
 
     var x1 = 0;
     var y1 = getPointY(slop, x1, yIntercept);
@@ -94,6 +94,15 @@ function drawLine() {
 
     stroke("red");
     line(x1, y1, x2, y2);
+    displayLineDetails();
+}
+
+function displayLineDetails(){
+    var tmpSlop = map(slop, 0, 1, 0, 100);
+    var tmpYIntercept = map(yIntercept, 0, 1, 0, 100);
+
+    $("#divSlop").html("Slop: " + tmpSlop.toFixed(2));
+    $("#divYIntercept").html("YIntercept: " + tmpYIntercept.toFixed(2));
 }
 
 function getPointY(slopParam, xParam, bParam) {

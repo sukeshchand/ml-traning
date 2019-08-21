@@ -7,14 +7,15 @@
     <script language="javascript" type="text/javascript" src="libraries/jquery.min.js"></script>
     <script language="javascript" type="text/javascript" src="main.js"></script>
     <style>
-        #tableData th, td {
+        #tableData th,
+        td {
             border: 1px solid #CCC;
         }
     </style>
 </head>
 
 <body>
-    <table >
+    <table>
         <tr>
             <td style="vertical-align: top;">
                 <div id="divCanvas">
@@ -27,17 +28,29 @@
                         <tr>
                             <th>
                                 Temperature
-                            </td>
-                            <th>
-                                Count
-                            </td>
-                        </tr>
-                    </table>
-                </div>
             </td>
+            <th>
+                Count
+                </td>
         </tr>
     </table>
-
+    </div>
+    </td>
+    <td style="width: 250px; vertical-align: top;">
+        <div style="font-weight: bold;">Informations</div>
+        <div style="margin:10px; padding: 6px; border: 1px solid #ccc">
+            <div>Line: y = mx + b</div>
+            <div>m = slop of the line</div>
+            <div>b = y intercept</div>
+            <div>x & y are the location cordiates</div>
+        </div>
+        <div style="margin:10px; padding: 6px; border: 1px solid #ccc">
+            <div id="divSlop"></div>
+            <div id="divYIntercept"></div>
+        </div>
+    </td>
+    </tr>
+    </table>
 </body>
 
 </html>

@@ -29,7 +29,7 @@ function draw() {
         var x = map(data[i].x, 0, 1, 0, width);
         var y = map(data[i].y, 0, 1, height, 0);
         fill(255);
-        stroke("yellow");
+        stroke("white");
         ellipse(x, y, 8, 8);
     }
     stroke("blue");

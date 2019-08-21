@@ -52,6 +52,7 @@ function draw() {
     translate(12, 160);
     rotate(55);
     text('Sales Count   --->', 0, 0);
+    $("#divDataCount").html("Total data points:" + data.length);
 }
 
 function linearRegression() {

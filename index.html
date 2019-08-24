@@ -31,7 +31,7 @@
                     <textarea id="txtData" style="font-size: 30px; width: 300px; height: 550px">
                     </textarea>
                     <div id="divDataCount" style="font-size: 30px; font-weight: bold;"></div>
-                    <input type="button" onclick="updateData()" value="Update data" style="width:200px; height:40px;"/>
+                    <input type="button" onclick="updateData()" value="Update data" style="width:200px; height:40px;" />
                     <hr>
                     <div style="margin:10px; padding: 6px; border: 1px solid #ccc">
                         <div id="divMouseXY" style="font-size: 30px; font-weight: bold;"></div>
@@ -64,6 +64,16 @@
                             <td>
                                 <input id="txtYIntercept" type="text" style="width:80px; color: red;">
                             </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                    Learning rate:
+                            </td>
+                            <td>
+                                <input style="width:150px" type="range" id="txtLearningRate" min="0.01" max=".5" value=".05" step=".01">
+                                <span id="spanLearningRate" style="color: red;"></span>
+                            </td>
+
                         </tr>
                     </table>
                 </div>
@@ -166,7 +176,14 @@
                             <table>
                                 <tr>
                                     <td>
-                                        <input type="checkbox" id="chkLinearRegression">Linear Regression
+                                        <input type="checkbox" id="chkLinearRegression">Linear Regression with Ordinary
+                                        Least Squares
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkLinearRegressionGD">Linear Regression with
+                                        Gradient Descent
                                     </td>
                                 </tr>
                             </table>

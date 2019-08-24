@@ -1,21 +1,8 @@
-var data = [];
-var slop = 0;
-var yIntercept = 0;
 
-var maxCanvasX = 700;
-var maxCanvasY = 700;
-
-var marginLineX = 50;
-var marginLineY = 50;
-
-var maxX = 50;
-var maxY = 100;
-
-var xText = "";
-var yText = "";
 
 var isMousePressInputAccept = false;
 var isComputeLinearRegression = true;
+var isComputeLinearRegressionGD = true;
 var isDrawLine = true;
 var isShowXAndYAxis = false;
 var isShowXAndYText = false;
@@ -41,6 +28,8 @@ function setupEvents() {
     attachRefresh("#chkIsDrawLine");
     attachRefresh("#chkMousePressInputAccept");
     attachRefresh("#chkLinearRegression");
+    attachRefresh("#chkLinearRegressionGD");
+    attachRefresh("#txtLearningRate");
 }
 
 function attachRefresh(id) {
@@ -99,7 +88,10 @@ function refreshSettings() {
     isShowXAndYText = $('#chkIsShowXAndYText').prop('checked');
     isDrawLine = $('#chkIsDrawLine').prop('checked');
     isComputeLinearRegression = $('#chkLinearRegression').prop('checked');
+    isComputeLinearRegressionGD = $('#chkLinearRegressionGD').prop('checked');
     isMousePressInputAccept = $('#chkMousePressInputAccept').prop('checked');
+    learning_rate = $("#txtLearningRate").val();
+    $("#spanLearningRate").text(learning_rate);
 }
 
 function fillInputs() {
@@ -112,6 +104,7 @@ function fillInputs() {
     $('#chkIsShowXAndYText').prop('checked', isShowXAndYText);
     $('#chkIsDrawLine').prop('checked', isDrawLine);
     $('#chkLinearRegression').prop('checked', isComputeLinearRegression);
+    $('#chkLinearRegressionGD').prop('checked', isComputeLinearRegressionGD);
     $('#chkMousePressInputAccept').prop('checked', isMousePressInputAccept);
     var dataString = "";
     for (i = 0; i < data.length; i++) {
@@ -120,6 +113,9 @@ function fillInputs() {
         dataString += xMapped + "," + yMapped + "\n";
     }
     $("#txtData").val(dataString);
+    $("#learning_rate").val(learning_rate);
+    $("#spanLearningRate").text(learning_rate);
+    
 }
 
 function defaultTestValues() {
@@ -155,6 +151,9 @@ function draw() {
     if (isComputeLinearRegression) {
         linearRegression();
     }
+    else if (isComputeLinearRegressionGD) {
+        linearRegressionGradientDescent();
+    }
     if (isDrawLine) {
         drawLine();
     }
@@ -184,33 +183,7 @@ function draw() {
 
 }
 
-function linearRegression() {
-    var xSum = 0;
-    var ySum = 0;
-    for (i = 0; i < data.length; i++) {
-        xSum += data[i].x;
-        ySum += data[i].y;
-    }
-    var xMean = xSum / data.length;
-    var yMean = ySum / data.length;
 
-    // find numerator and denominator
-    var numerator = 0;
-    var denominator = 0;
-    for (i = 0; i < data.length; i++) {
-        var x = data[i].x;
-        var y = data[i].y;
-        numerator += (x - xMean) * (y - yMean);
-        denominator += (x - xMean) * (x - xMean);
-    }
-
-    if (denominator != 0) {
-        slop = numerator / denominator; // slop is the m variable in the formula - y = mx + b
-        yIntercept = yMean - slop * xMean; // yIntercept is the b variable in the formula - y = mx + b
-    }
-
-    displayLineDetails();
-}
 
 function predictY() {
     var x = +($("#txtPredictionX").val());
@@ -254,7 +227,7 @@ function drawLine() {
     line(x1, y1, x2, y2);
 }
 
-function displayLineDetails() {
+function refreshAIModel() {
     var tmpSlop = map(slop, 0, 1, 0, maxX);
     var tmpYIntercept = map(yIntercept, 0, 1, 0, maxY);
 

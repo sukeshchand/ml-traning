@@ -1,3 +1,21 @@
+var data = [];
+var slop = 0;
+var yIntercept = 0;
+
+var maxCanvasX = 700;
+var maxCanvasY = 700;
+
+var marginLineX = 50;
+var marginLineY = 50;
+
+var maxX = 50;
+var maxY = 100;
+
+var xText = "";
+var yText = ""; 
+
+var learning_rate = ".01";
+
 function linearRegression() {
     var xSum = 0;
     var ySum = 0;
@@ -23,5 +41,17 @@ function linearRegression() {
         yIntercept = yMean - slop * xMean; // yIntercept is the b variable in the formula - y = mx + b
     }
 
-    displayLineDetails();
+    refreshAIModel();
+}
+
+function linearRegressionGradientDescent (){
+    for (i = 0; i < data.length; i++) {
+        x = data[i].x;
+        y = data[i].y;
+        var guess = slop * x + yIntercept;
+        var error = y - guess;
+        slop = slop + (error * x) * learning_rate;
+        yIntercept = yIntercept + (error * learning_rate);
+    }
+    refreshAIModel();
 }

@@ -31,6 +31,7 @@ function setup() {
 
 function mousePressed() {
     if (!isMousePressInputAccept) return;
+    if(mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) return;
     var x = map(mouseX, 0, width, 0, 1);
     var y = map(mouseY, 0, height, 1, 0);
     var xMapped = map(mouseX, 0, width, 0, maxX) | 0;
@@ -68,8 +69,8 @@ function fillInputs() {
     $('#chkMousePressInputAccept').prop('checked', isMousePressInputAccept);
     var dataString = "";
     for(i=0; i<data.length; i++){
-        var xMapped = map(data[i].x, 0, width, 0, maxX) | 0;
-        var yMapped = map(data[i].y, 0, height, maxY, 0) | 0;
+        var xMapped = map(data[i].x, 0, 1, 0, maxX) | 0;
+        var yMapped = map(data[i].y, 1, 0, maxY, 0) | 0;
         dataString += xMapped + "," + yMapped + "\n";
     }
     $("#txtData").val(dataString);

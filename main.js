@@ -30,26 +30,26 @@ function setup() {
     setupEvents();
 }
 
-function setupEvents(){
+function setupEvents() {
     attachRefresh("#txtMaxX");
     attachRefresh("#txtXText");
     attachRefresh("#txtMaxY");
     attachRefresh("#chkIsShowXAndYAxis");
     attachRefresh("#txtXText");
     attachRefresh("#txtYText");
-    attachRefresh("#chkIsShowXAndYText");  
-    attachRefresh("#chkIsDrawLine");  
-    attachRefresh("#chkMousePressInputAccept");  
+    attachRefresh("#chkIsShowXAndYText");
+    attachRefresh("#chkIsDrawLine");
+    attachRefresh("#chkMousePressInputAccept");
     attachRefresh("#chkLinearRegression");
 }
 
-function attachRefresh(id){
-    $(id).on('change keydown paste input', function(){
+function attachRefresh(id) {
+    $(id).on('change keydown paste input', function () {
         refreshSettings();
-  });
+    });
 }
 
-function addInputData(xParam, yParam) {
+function addInputData(xParam, yParam, refreshDataView) {
     var x = map(xParam, 0, width, 0, 1);
     var y = map(yParam, 0, height, 1, 0);
     var xMapped = map(mouseX, 0, width, 0, maxX) | 0;
@@ -57,14 +57,36 @@ function addInputData(xParam, yParam) {
 
     var point = createVector(x, y);
     data.push(point);
-    appendToTable("#tableData", xMapped, yMapped);
-    fillInputs();
+    if (refreshDataView) {
+        appendToTable("#tableData", xMapped, yMapped);
+        fillInputs();
+    }
 }
 
 function mousePressed() {
     if (!isMousePressInputAccept) return;
     if (mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) return;
-    addInputData(mouseX, mouseY);
+    addInputData(mouseX, mouseY, true);
+}
+
+function updateData() {
+    data = [];
+    slop = 0;
+    yIntercept = 0;
+
+    var strData = $("#txtData").val().split("\n");
+    for (i = 0; i < strData.length; i++) {
+        var strData2 = strData[i].split(",");
+        if(strData2.length !=2 || isNaN(strData2[0]) || isNaN(strData2[1])) continue;
+        var x = map(Number(strData2[0]), 0, maxX, 0, width);
+        var y = map(Number(strData2[1]),0, maxY, height, 0);
+        if(i + 1 == strData.length){
+            addInputData(x, y, true); 
+        }
+        else{
+            addInputData(x, y, false); 
+        }
+    }
 }
 
 function refreshSettings() {
@@ -137,11 +159,11 @@ function draw() {
         drawLine();
     }
 
-    $("#divDataCount").html("Data count: " + data.length);
+    $("#divDataCount").html("Data count: <span style='color:red;'>" + data.length + "</span>");
     if (!(mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height)) {
         var mouseXConverted = map(mouseX, 0, width, 0, maxX);
         var mouseYConverted = map(mouseY, height, 0, 0, maxY);
-        $("#divMouseXY").html("x: " + mouseXConverted.toFixed(0) + ", y: " + mouseYConverted.toFixed(0));
+        $("#divMouseXY").html("x: <span style='color:red;'>" + mouseXConverted.toFixed(0) + "</span>, y: <span style='color:red;'>" + mouseYConverted.toFixed(0) + "</span>");
     }
 
     if (isShowXAndYText) {
@@ -211,7 +233,7 @@ function addXYToData() {
     var y = Number($("#txtPredictionY").val())
     var xPre = map(x, 0, maxX, 0, width);
     var yPre = map(y, 0, maxY, height, 0);
-    addInputData(xPre, yPre)
+    addInputData(xPre, yPre, true);
 }
 
 function drawLine() {

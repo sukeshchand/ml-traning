@@ -31,7 +31,8 @@
                     <textarea id="txtData" style="font-size: 30px; width: 300px; height: 550px">
                     </textarea>
                     <div style="margin:10px; padding: 6px; border: 1px solid #ccc">
-                        <div id="divDataCount"></div>
+                        <div id="divDataCount" style="font-size: 30px; font-weight: bold;"></div>
+                        <div id="divMouseXY" style="font-size: 30px; font-weight: bold;"></div>
                     </div>
 
                 </div>
@@ -60,6 +61,33 @@
                             </td>
                             <td>
                                 <input id="txtYIntercept" type="text" style="width:80px; color: red;">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="margin:10px; padding: 6px; border: 1px solid #ccc">
+                    <span>Prediction</span>
+                    <table>
+                        <tr>
+                            <td>
+                                X
+                            </td>
+                            <td>
+                                <input id="txtPredictionX" type="text" style="width:80px; color: red;">
+                            </td>
+                            <td>
+                                <input type="button" value="Predict" onclick="predictY()">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Y
+                            </td>
+                            <td>
+                                <input id="txtPredictionY" type="text" style="width:80px; color: red;">
+                            </td>
+                            <td>
+                                <input type="button" value="Add" onclick="addXYToData()">
                             </td>
                         </tr>
                     </table>

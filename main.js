@@ -27,13 +27,31 @@ function setup() {
     background(canvasBackground);
     defaultTestValues();
     fillInputs();
+    setupEvents();
 }
 
-function mousePressed() {
-    if (!isMousePressInputAccept) return;
-    if (mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) return;
-    var x = map(mouseX, 0, width, 0, 1);
-    var y = map(mouseY, 0, height, 1, 0);
+function setupEvents(){
+    attachRefresh("#txtMaxX");
+    attachRefresh("#txtXText");
+    attachRefresh("#txtMaxY");
+    attachRefresh("#chkIsShowXAndYAxis");
+    attachRefresh("#txtXText");
+    attachRefresh("#txtYText");
+    attachRefresh("#chkIsShowXAndYText");  
+    attachRefresh("#chkIsDrawLine");  
+    attachRefresh("#chkMousePressInputAccept");  
+    attachRefresh("#chkLinearRegression");
+}
+
+function attachRefresh(id){
+    $(id).on('change keydown paste input', function(){
+        refreshSettings();
+  });
+}
+
+function addInputData(xParam, yParam) {
+    var x = map(xParam, 0, width, 0, 1);
+    var y = map(yParam, 0, height, 1, 0);
     var xMapped = map(mouseX, 0, width, 0, maxX) | 0;
     var yMapped = map(mouseY, 0, height, maxY, 0) | 0;
 
@@ -41,6 +59,12 @@ function mousePressed() {
     data.push(point);
     appendToTable("#tableData", xMapped, yMapped);
     fillInputs();
+}
+
+function mousePressed() {
+    if (!isMousePressInputAccept) return;
+    if (mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) return;
+    addInputData(mouseX, mouseY);
 }
 
 function refreshSettings() {
@@ -113,7 +137,12 @@ function draw() {
         drawLine();
     }
 
-    $("#divDataCount").html("Total data points:" + data.length);
+    $("#divDataCount").html("Data count: " + data.length);
+    if (!(mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height)) {
+        var mouseXConverted = map(mouseX, 0, width, 0, maxX);
+        var mouseYConverted = map(mouseY, height, 0, 0, maxY);
+        $("#divMouseXY").html("x: " + mouseXConverted.toFixed(0) + ", y: " + mouseYConverted.toFixed(0));
+    }
 
     if (isShowXAndYText) {
         stroke(canvasBackground);
@@ -161,6 +190,30 @@ function linearRegression() {
     displayLineDetails();
 }
 
+function predictY() {
+    var x = +($("#txtPredictionX").val());
+
+    var xConverted = map(x, 0, maxX, 0, width);
+    xConverted = map(xConverted, 0, width, 0, 1);
+
+    // predict y
+    var y = slop * xConverted + yIntercept;
+
+    var yConverted = map(y, 1, 0, 0, height);
+    yConverted = map(yConverted, height, 0, 0, maxY);
+
+    $("#txtPredictionY").val(yConverted.toFixed(0));
+}
+
+
+function addXYToData() {
+    var x = Number($("#txtPredictionX").val())
+    var y = Number($("#txtPredictionY").val())
+    var xPre = map(x, 0, maxX, 0, width);
+    var yPre = map(y, 0, maxY, height, 0);
+    addInputData(xPre, yPre)
+}
+
 function drawLine() {
     if (slop == 0 && yIntercept == 0) return;
     var x1 = 0;
@@ -180,8 +233,8 @@ function drawLine() {
 }
 
 function displayLineDetails() {
-    var tmpSlop = map(slop, 0, 1, 0, 100);
-    var tmpYIntercept = map(yIntercept, 0, 1, 0, 100);
+    var tmpSlop = map(slop, 0, 1, 0, maxX);
+    var tmpYIntercept = map(yIntercept, 0, 1, 0, maxY);
 
     $("#txtSlop").val(tmpSlop.toFixed(2));
     $("#txtYIntercept").val(tmpYIntercept.toFixed(2));

@@ -10,52 +10,106 @@
     <style>
         #tableData th,
         td {
-            border: 1px solid #CCC;
+            border: 0px solid #CCC;
+            padding: 4px;
         }
     </style>
 </head>
 
 <body style="text-align: center">
     <div style="display: inline-block;">
+
+
+        <div style="border: 1px solid #ccc; margin: 10px;"" >
         <table>
             <tr>
-                <td style="vertical-align: top;">
-                    <div id="divCanvas">
-                    </div>
-                </td>
-                <td style="width: 250px; vertical-align: top;">
-                    <div style="vertical-align: top; font-weight: bold;">Data set</div>
-                    <div style="height:500px; overflow-y:scroll;">
-                        <table id="tableData">
-                            <tr>
-                                <th>
-                                    Temperature
-                </td>
-                <th>
-                    Count
-                    </td>
+                <td style=" vertical-align: top;">
+            <div id="divCanvas">
+            </div>
+            </td>
+            <td style="width: 250px; vertical-align: top;">
+                <div style="vertical-align: top; font-weight: bold;">Data set</div>
+                <div style="height:500px; overflow-y:scroll;">
+                    <table id="tableData">
+                        <tr>
+                            <th>
+                                Temperature
+                            </th>
+                            <th>
+                                Count
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+            <td style="width: 250px; vertical-align: top;">
+                <div style="font-weight: bold;">Informations</div>
+                <div style="margin:10px; padding: 6px; border: 1px solid #ccc">
+                    <div>Line: y = mx + b</div>
+                    <div>m = slop of the line</div>
+                    <div>b = y intercept</div>
+                    <div>x & y are the location cordiates</div>
+                </div>
+                <div style="margin:10px; padding: 6px; border: 1px solid #ccc">
+                    <div id="divSlop"></div>
+                    <div id="divYIntercept"></div>
+                </div>
+                <div style="margin:10px; padding: 6px; border: 1px solid #ccc">
+                    <div id="divDataCount"></div>
+                </div>
+            </td>
             </tr>
-        </table>
-    </div>
-    </td>
-    <td style="width: 250px; vertical-align: top;">
-        <div style="font-weight: bold;">Informations</div>
-        <div style="margin:10px; padding: 6px; border: 1px solid #ccc">
-            <div>Line: y = mx + b</div>
-            <div>m = slop of the line</div>
-            <div>b = y intercept</div>
-            <div>x & y are the location cordiates</div>
+            </table>
         </div>
-        <div style="margin:10px; padding: 6px; border: 1px solid #ccc">
-            <div id="divSlop"></div>
-            <div id="divYIntercept"></div>
+        <div style="border: 1px solid #ccc; margin: 10px;">
+            <table border="0">
+                <tr>
+                    <td colspan="4">
+                        <input onclick="refreshSettings()" style="width:200px; height:40px;" type="button"
+                            value="Refresh" />
+                        <hr>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Max-X:
+                    </td>
+                    <td>
+                        <input type="text" value="" id="txtMaxX">
+                    </td>
+                    <td>
+                        Max-Y:
+                    </td>
+                    <td>
+                        <input type="text" value="" id="txtMaxY">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        X-Text:
+                    </td>
+                    <td>
+                        <input type="text" value="" id="txtXText">
+                    </td>
+                    <td>
+                        Y-Text:
+                    </td>
+                    <td>
+                        <input type="text" value="" id="txtYText">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <input type="checkbox" id="chkIsShowXAndYAxis">Show X Y Axis
+                    </td>
+                </tr>
+                <tr>
+                        <td colspan="4">
+                            <input type="checkbox" id="chkIsShowXAndYText">Show X Y Text
+                        </td>
+                    </tr>
+            </table>
         </div>
-        <div style="margin:10px; padding: 6px; border: 1px solid #ccc">
-            <div id="divDataCount"></div>
-        </div>
-    </td>
-    </tr>
-    </table>
     </div>
 </body>
 

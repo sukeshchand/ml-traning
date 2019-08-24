@@ -2,8 +2,8 @@ var data = [];
 var slop = 1;
 var yIntercept = 0;
 
-var maxCanvasX = 800;
-var maxCanvasY = 800;
+var maxCanvasX = 700;
+var maxCanvasY = 700;
 
 var marginLineX = 50;
 var marginLineY = 50;
@@ -11,19 +11,22 @@ var marginLineY = 50;
 var maxX = 40;
 var maxY = 100;
 
-var xText = "Temperature   --->";
-var yText = "Sales Count   --->";
+var xText = "";
+var yText = "";
 
 var isMousePressInputAccept = false;
 var isComputeLinearRegression = true;
 var isDrawLine = true;
-var isShowXAndY = false;
+var isShowXAndYAxis = false;
 var isShowXAndYText = false;
+var canvasBackground = "gray";
 
 function setup() {
     var canvas = createCanvas(maxCanvasX, maxCanvasY);
     canvas.parent('divCanvas');
-    background("green");
+    background(canvasBackground);
+    defaultTestValues();
+    fillInputs();
 }
 
 function mousePressed() {
@@ -38,8 +41,38 @@ function mousePressed() {
     appendToTable("#tableData", temperature, salesCount);
 }
 
+function refreshSettings(){
+    maxX = Number($("#txtMaxX").val());
+    maxY = Number($("#txtMaxY").val());
+
+    xText = $("#txtXText").val();
+    yText = $("#txtYText").val();
+    isShowXAndYAxis = $('#chkIsShowXAndYAxis').prop('checked');
+    isShowXAndYText = $('#chkIsShowXAndYText').prop('checked');
+}
+
+function fillInputs() {
+    $("#txtMaxX").val(maxX)
+    $("#txtMaxY").val(maxY);
+
+    $("#txtXText").val(xText);
+    $("#txtYText").val(yText);
+    $('#chkIsShowXAndYAxis').prop('checked', isShowXAndYAxis);
+    $('#chkIsShowXAndYText').prop('checked', isShowXAndYText);
+}
+
+function defaultTestValues(){
+    maxX = 50;
+    maxY = 100;
+
+    xText = "Tempeature"
+    yText = "Ice cream sales count"
+    isShowXAndYAxis = true;
+    isShowXAndYText = true;
+}
+
 function draw() {
-    background("green");
+    background(canvasBackground);
     for (i = 0; i < data.length; i++) {
         var x = map(data[i].x, 0, 1, 0, width);
         var y = map(data[i].y, 0, 1, height, 0);
@@ -51,22 +84,22 @@ function draw() {
     strokeWeight(5);
 
     //draw line X & y
-    if (isShowXAndY) {
+    if (isShowXAndYAxis) {
         line(marginLineX, maxCanvasY - marginLineX, (maxCanvasX - marginLineX), (maxCanvasY - marginLineY));
         line(marginLineX, marginLineY, marginLineX, (maxCanvasY - marginLineY));
     }
     if(isShowXAndYText){
-        stroke("green");
+        stroke(canvasBackground);
         fill(255);
-        textSize(16);
-        text('0', marginLineX - 10, maxCanvasY - marginLineX + 20);
-        text(xText, marginLineX + marginLineY, maxCanvasY - 20);
+        textSize(25);
+        text('0', marginLineX - 15, maxCanvasY - marginLineX + 20);
+        text(xText + " ------>  (Max value:" + maxX + ")", marginLineX + marginLineY, maxCanvasY - 20);
 
         fill(255);
-        stroke("green");
+        stroke(canvasBackground);
         translate(20, maxCanvasY - marginLineY - marginLineX);
         rotate(55);
-        text(yText, 0, 0);
+        text(yText + " ------>  (Max value:" + maxY + ")", 0, 0);
     
     }
 

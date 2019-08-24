@@ -16,10 +16,8 @@
     </style>
 </head>
 
-<body style="text-align: center">
+<body style="text-align: left">
     <div style="display: inline-block;">
-
-
         <div style="border: 1px solid #ccc; margin: 10px;"" >
         <table>
             <tr>
@@ -29,8 +27,13 @@
             </td>
             <td style="width: 250px; vertical-align: top;">
                 <div style="vertical-align: top; font-weight: bold;">Data set</div>
-                <div style="height:500px; overflow-y:scroll;">
-                    <table id="tableData">
+                <div style="height:650px; overflow-y:scroll;">
+                    <textarea id="txtData" style="font-size: 30px; width: 300px; height: 550px">
+                    </textarea>
+                    <div style="margin:10px; padding: 6px; border: 1px solid #ccc">
+                            <div id="divDataCount"></div>
+                        </div>
+                    <table style="display: none;" id="tableData">
                         <tr>
                             <th>
                                 Temperature
@@ -54,61 +57,91 @@
                     <div id="divSlop"></div>
                     <div id="divYIntercept"></div>
                 </div>
-                <div style="margin:10px; padding: 6px; border: 1px solid #ccc">
-                    <div id="divDataCount"></div>
-                </div>
+                
             </td>
             </tr>
             </table>
         </div>
         <div style="border: 1px solid #ccc; margin: 10px;">
-            <table border="0">
+            <table>
                 <tr>
-                    <td colspan="4">
-                        <input onclick="refreshSettings()" style="width:200px; height:40px;" type="button"
-                            value="Refresh" />
-                        <hr>
+                    <td>
+                        <div style="border: 1px solid #ccc; margin:5px; padding:5px;">
+                            <table border="0">
+                                <tr>
+                                    <td colspan="4">
+                                        <input onclick="refreshSettings()" style="width:200px; height:40px;"
+                                            type="button" value="Refresh" />
+                                        <hr>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Max-X:
+                                    </td>
+                                    <td>
+                                        <input type="text" value="" id="txtMaxX">
+                                    </td>
+                                    <td>
+                                        Max-Y:
+                                    </td>
+                                    <td>
+                                        <input type="text" value="" id="txtMaxY">
+                                        <input type="checkbox" id="chkIsShowXAndYAxis">Axis
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        X-Text:
+                                    </td>
+                                    <td>
+                                        <input type="text" value="" id="txtXText">
+                                        
+                                    </td>
+                                    <td>
+                                        Y-Text:
+                                    </td>
+                                    <td>
+                                        <input type="text" value="" id="txtYText">
+                                        <input type="checkbox" id="chkIsShowXAndYText">Text
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8">
+                                            <input type="checkbox" id="chkIsDrawLine">Draw line
+                                            <input type="checkbox" id="chkMousePressInputAccept">Mouse click data
+                                    </td>
+                                </tr>
+                                <tr>
+                                </tr>
+                                <tr>
+                                        <td colspan="4">
+                                        
+                                    </td>
+                                </tr>
+                                
+
+                            </table>
+                        </div>
+                    </td>
+                    <td style="text-align: left; vertical-align: top;">
+                        <div style="border: 1px solid #ccc; margin:5px; padding:5px;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkLinearRegression">Linear Regression
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        Max-X:
-                    </td>
-                    <td>
-                        <input type="text" value="" id="txtMaxX">
-                    </td>
-                    <td>
-                        Max-Y:
-                    </td>
-                    <td>
-                        <input type="text" value="" id="txtMaxY">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        X-Text:
-                    </td>
-                    <td>
-                        <input type="text" value="" id="txtXText">
-                    </td>
-                    <td>
-                        Y-Text:
-                    </td>
-                    <td>
-                        <input type="text" value="" id="txtYText">
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4">
-                        <input type="checkbox" id="chkIsShowXAndYAxis">Show X Y Axis
-                    </td>
-                </tr>
-                <tr>
-                        <td colspan="4">
-                            <input type="checkbox" id="chkIsShowXAndYText">Show X Y Text
-                        </td>
-                    </tr>
+            
             </table>
+            </td>
+            </tr>
+            </table>
+
         </div>
     </div>
 </body>

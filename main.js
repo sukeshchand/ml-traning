@@ -33,12 +33,13 @@ function mousePressed() {
     if (!isMousePressInputAccept) return;
     var x = map(mouseX, 0, width, 0, 1);
     var y = map(mouseY, 0, height, 1, 0);
-    var temperature = map(mouseX, 0, width, 0, maxX) | 0;
-    var salesCount = map(mouseY, 0, height, maxY, 0) | 0;
+    var xMapped = map(mouseX, 0, width, 0, maxX) | 0;
+    var yMapped = map(mouseY, 0, height, maxY, 0) | 0;
 
     var point = createVector(x, y);
     data.push(point);
-    appendToTable("#tableData", temperature, salesCount);
+    appendToTable("#tableData", xMapped, yMapped);
+    fillInputs();
 }
 
 function refreshSettings(){
@@ -49,6 +50,9 @@ function refreshSettings(){
     yText = $("#txtYText").val();
     isShowXAndYAxis = $('#chkIsShowXAndYAxis').prop('checked');
     isShowXAndYText = $('#chkIsShowXAndYText').prop('checked');
+    isDrawLine = $('#chkIsDrawLine').prop('checked');
+    isComputeLinearRegression = $('#chkLinearRegression').prop('checked');
+    isMousePressInputAccept = $('#chkMousePressInputAccept').prop('checked');
 }
 
 function fillInputs() {
@@ -59,6 +63,16 @@ function fillInputs() {
     $("#txtYText").val(yText);
     $('#chkIsShowXAndYAxis').prop('checked', isShowXAndYAxis);
     $('#chkIsShowXAndYText').prop('checked', isShowXAndYText);
+    $('#chkIsDrawLine').prop('checked', isDrawLine);
+    $('#chkLinearRegression').prop('checked', isComputeLinearRegression);
+    $('#chkMousePressInputAccept').prop('checked', isMousePressInputAccept);
+    var dataString = "";
+    for(i=0; i<data.length; i++){
+        var xMapped = map(data[i].x, 0, width, 0, maxX) | 0;
+        var yMapped = map(data[i].y, 0, height, maxY, 0) | 0;
+        dataString += xMapped + "," + yMapped + "\n";
+    }
+    $("#txtData").val(dataString);
 }
 
 function defaultTestValues(){
@@ -69,6 +83,8 @@ function defaultTestValues(){
     yText = "Ice cream sales count"
     isShowXAndYAxis = true;
     isShowXAndYText = true;
+    isDrawLine = true;
+    isMousePressInputAccept = true;
 }
 
 function draw() {

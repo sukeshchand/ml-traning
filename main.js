@@ -2,21 +2,36 @@ var data = [];
 var slop = 1;
 var yIntercept = 0;
 
-var maxTemperatureX = 40;
-var maxSalesCountY = 100;
+var maxCanvasX = 800;
+var maxCanvasY = 800;
+
+var marginLineX = 50;
+var marginLineY = 50;
+
+var maxX = 40;
+var maxY = 100;
+
+var xText = "Temperature   --->";
+var yText = "Sales Count   --->";
+
+var isMousePressInputAccept = false;
+var isComputeLinearRegression = true;
+var isDrawLine = true;
+var isShowXAndY = false;
+var isShowXAndYText = false;
 
 function setup() {
-
-    var canvas = createCanvas(400, 400);
+    var canvas = createCanvas(maxCanvasX, maxCanvasY);
     canvas.parent('divCanvas');
     background("green");
 }
 
 function mousePressed() {
+    if (!isMousePressInputAccept) return;
     var x = map(mouseX, 0, width, 0, 1);
     var y = map(mouseY, 0, height, 1, 0);
-    var temperature = map(mouseX, 0, width, 0, maxTemperatureX) | 0;
-    var salesCount = map(mouseY, 0, height, maxSalesCountY, 0) | 0;
+    var temperature = map(mouseX, 0, width, 0, maxX) | 0;
+    var salesCount = map(mouseY, 0, height, maxY, 0) | 0;
 
     var point = createVector(x, y);
     data.push(point);
@@ -32,26 +47,36 @@ function draw() {
         stroke("white");
         ellipse(x, y, 8, 8);
     }
-    stroke("blue");
+    stroke("cyan");
     strokeWeight(5);
-    line(20, 20, 20, 380);
-    line(20, 380, 380, 380);
-    stroke("green");
-    fill(255);
-    textSize(16);
-    text('0', 5, 390);
-    text('100', 3, 25);
-    text('40°C', 355, 395);
-    text('Temperature   --->', 220, 395);
-    
-    linearRegression();    
-    drawLine();
 
-    fill(255);
-    stroke("green");
-    translate(12, 160);
-    rotate(55);
-    text('Sales Count   --->', 0, 0);
+    //draw line X & y
+    if (isShowXAndY) {
+        line(marginLineX, maxCanvasY - marginLineX, (maxCanvasX - marginLineX), (maxCanvasY - marginLineY));
+        line(marginLineX, marginLineY, marginLineX, (maxCanvasY - marginLineY));
+    }
+    if(isShowXAndYText){
+        stroke("green");
+        fill(255);
+        textSize(16);
+        text('0', marginLineX - 10, maxCanvasY - marginLineX + 20);
+        text(xText, marginLineX + marginLineY, maxCanvasY - 20);
+
+        fill(255);
+        stroke("green");
+        translate(20, maxCanvasY - marginLineY - marginLineX);
+        rotate(55);
+        text(yText, 0, 0);
+    
+    }
+
+    if (isComputeLinearRegression) {
+        linearRegression();
+    }
+    if (isDrawLine) {
+        drawLine();
+    }
+
     $("#divDataCount").html("Total data points:" + data.length);
 }
 
@@ -71,8 +96,8 @@ function linearRegression() {
     for (i = 0; i < data.length; i++) {
         var x = data[i].x;
         var y = data[i].y;
-        numerator += (x-xMean) * (y-yMean);
-        denominator += (x-xMean) * (x-xMean);
+        numerator += (x - xMean) * (y - yMean);
+        denominator += (x - xMean) * (x - xMean);
     }
 
     slop = numerator / denominator; // slop is the m variable in the formula - y = mx + b
@@ -98,7 +123,7 @@ function drawLine() {
     displayLineDetails();
 }
 
-function displayLineDetails(){
+function displayLineDetails() {
     var tmpSlop = map(slop, 0, 1, 0, 100);
     var tmpYIntercept = map(yIntercept, 0, 1, 0, 100);
 

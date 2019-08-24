@@ -1,5 +1,5 @@
 var data = [];
-var slop = 1;
+var slop = 0;
 var yIntercept = 0;
 
 var maxCanvasX = 700;
@@ -8,7 +8,7 @@ var maxCanvasY = 700;
 var marginLineX = 50;
 var marginLineY = 50;
 
-var maxX = 40;
+var maxX = 50;
 var maxY = 100;
 
 var xText = "";
@@ -31,7 +31,7 @@ function setup() {
 
 function mousePressed() {
     if (!isMousePressInputAccept) return;
-    if(mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) return;
+    if (mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) return;
     var x = map(mouseX, 0, width, 0, 1);
     var y = map(mouseY, 0, height, 1, 0);
     var xMapped = map(mouseX, 0, width, 0, maxX) | 0;
@@ -43,7 +43,7 @@ function mousePressed() {
     fillInputs();
 }
 
-function refreshSettings(){
+function refreshSettings() {
     maxX = Number($("#txtMaxX").val());
     maxY = Number($("#txtMaxY").val());
 
@@ -68,7 +68,7 @@ function fillInputs() {
     $('#chkLinearRegression').prop('checked', isComputeLinearRegression);
     $('#chkMousePressInputAccept').prop('checked', isMousePressInputAccept);
     var dataString = "";
-    for(i=0; i<data.length; i++){
+    for (i = 0; i < data.length; i++) {
         var xMapped = map(data[i].x, 0, 1, 0, maxX) | 0;
         var yMapped = map(data[i].y, 1, 0, maxY, 0) | 0;
         dataString += xMapped + "," + yMapped + "\n";
@@ -76,7 +76,7 @@ function fillInputs() {
     $("#txtData").val(dataString);
 }
 
-function defaultTestValues(){
+function defaultTestValues() {
     maxX = 50;
     maxY = 100;
 
@@ -105,7 +105,17 @@ function draw() {
         line(marginLineX, maxCanvasY - marginLineX, (maxCanvasX - marginLineX), (maxCanvasY - marginLineY));
         line(marginLineX, marginLineY, marginLineX, (maxCanvasY - marginLineY));
     }
-    if(isShowXAndYText){
+
+    if (isComputeLinearRegression) {
+        linearRegression();
+    }
+    if (isDrawLine) {
+        drawLine();
+    }
+
+    $("#divDataCount").html("Total data points:" + data.length);
+
+    if (isShowXAndYText) {
         stroke(canvasBackground);
         fill(255);
         textSize(25);
@@ -117,17 +127,10 @@ function draw() {
         translate(20, maxCanvasY - marginLineY - marginLineX);
         rotate(55);
         text(yText + " ------>  (Max value:" + maxY + ")", 0, 0);
-    
+
     }
 
-    if (isComputeLinearRegression) {
-        linearRegression();
-    }
-    if (isDrawLine) {
-        drawLine();
-    }
 
-    $("#divDataCount").html("Total data points:" + data.length);
 }
 
 function linearRegression() {
@@ -150,12 +153,16 @@ function linearRegression() {
         denominator += (x - xMean) * (x - xMean);
     }
 
-    slop = numerator / denominator; // slop is the m variable in the formula - y = mx + b
-    yIntercept = yMean - slop * xMean; // yIntercept is the b variable in the formula - y = mx + b
+    if (denominator != 0) {
+        slop = numerator / denominator; // slop is the m variable in the formula - y = mx + b
+        yIntercept = yMean - slop * xMean; // yIntercept is the b variable in the formula - y = mx + b
+    }
+
+    displayLineDetails();
 }
 
 function drawLine() {
-
+    if (slop == 0 && yIntercept == 0) return;
     var x1 = 0;
     var y1 = getPointY(slop, x1, yIntercept);
 
@@ -170,15 +177,14 @@ function drawLine() {
 
     stroke("red");
     line(x1, y1, x2, y2);
-    displayLineDetails();
 }
 
 function displayLineDetails() {
     var tmpSlop = map(slop, 0, 1, 0, 100);
     var tmpYIntercept = map(yIntercept, 0, 1, 0, 100);
 
-    $("#divSlop").html("Slop: " + tmpSlop.toFixed(2));
-    $("#divYIntercept").html("YIntercept: " + tmpYIntercept.toFixed(2));
+    $("#txtSlop").val(tmpSlop.toFixed(2));
+    $("#txtYIntercept").val(tmpYIntercept.toFixed(2));
 }
 
 function getPointY(slopParam, xParam, bParam) {

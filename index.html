@@ -31,18 +31,9 @@
                     <textarea id="txtData" style="font-size: 30px; width: 300px; height: 550px">
                     </textarea>
                     <div style="margin:10px; padding: 6px; border: 1px solid #ccc">
-                            <div id="divDataCount"></div>
-                        </div>
-                    <table style="display: none;" id="tableData">
-                        <tr>
-                            <th>
-                                Temperature
-                            </th>
-                            <th>
-                                Count
-                            </th>
-                        </tr>
-                    </table>
+                        <div id="divDataCount"></div>
+                    </div>
+
                 </div>
             </td>
             <td style="width: 250px; vertical-align: top;">
@@ -54,10 +45,26 @@
                     <div>x & y are the location cordiates</div>
                 </div>
                 <div style="margin:10px; padding: 6px; border: 1px solid #ccc">
-                    <div id="divSlop"></div>
-                    <div id="divYIntercept"></div>
+                    <table>
+                        <tr>
+                            <td>
+                                Slop(m):
+                            </td>
+                            <td>
+                                <input id="txtSlop" type="text" style="width:80px; color: red;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                YIntercept(b):
+                            </td>
+                            <td>
+                                <input id="txtYIntercept" type="text" style="width:80px; color: red;">
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-                
+
             </td>
             </tr>
             </table>
@@ -96,7 +103,7 @@
                                     </td>
                                     <td>
                                         <input type="text" value="" id="txtXText">
-                                        
+
                                     </td>
                                     <td>
                                         Y-Text:
@@ -108,18 +115,18 @@
                                 </tr>
                                 <tr>
                                     <td colspan="8">
-                                            <input type="checkbox" id="chkIsDrawLine">Draw line
-                                            <input type="checkbox" id="chkMousePressInputAccept">Mouse click data
+                                        <input type="checkbox" id="chkIsDrawLine">Draw line
+                                        <input type="checkbox" id="chkMousePressInputAccept">Mouse click data
                                     </td>
                                 </tr>
                                 <tr>
                                 </tr>
                                 <tr>
-                                        <td colspan="4">
-                                        
+                                    <td colspan="4">
+
                                     </td>
                                 </tr>
-                                
+
 
                             </table>
                         </div>
@@ -136,7 +143,7 @@
                         </div>
                     </td>
                 </tr>
-            
+
             </table>
             </td>
             </tr>

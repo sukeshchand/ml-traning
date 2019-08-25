@@ -58,6 +58,15 @@ function mousePressed() {
     addInputData(mouseX, mouseY, true);
 }
 
+function resetData(){
+    data = [];
+    slop = 0;
+    yIntercept = 0;
+    fillInputs();
+    $("#txtPredictionX").val("");
+    $("#txtPredictionY").val("");
+}
+
 function updateData() {
     data = [];
     slop = 0;

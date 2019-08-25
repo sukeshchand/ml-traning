@@ -54,7 +54,7 @@
                                 Slop(m):
                             </td>
                             <td>
-                                <input id="txtSlop" type="text" style="width:80px; color: red;">
+                                <input id="txtSlop" type="text" style="width:100px; color: red;font-size: 30px;font-weight: bold;">
                             </td>
                         </tr>
                         <tr>
@@ -62,7 +62,7 @@
                                 YIntercept(b):
                             </td>
                             <td>
-                                <input id="txtYIntercept" type="text" style="width:80px; color: red;">
+                                <input id="txtYIntercept" type="text" style="width:100px; color: red;font-size: 30px;font-weight: bold;">
                             </td>
                         </tr>
                         <tr>
@@ -70,8 +70,8 @@
                                     Learning rate:
                             </td>
                             <td>
-                                <input style="width:150px" type="range" id="txtLearningRate" min="0.01" max=".5" value=".05" step=".01">
-                                <span id="spanLearningRate" style="color: red;"></span>
+                                <input style="width:150px;" type="range" id="txtLearningRate" min="0.01" max="0.5" value=".05" step=".01" >
+                                <span id="spanLearningRate" style="color: red;font-size: 30px;font-weight: bold;    "></span>
                             </td>
 
                         </tr>
@@ -85,7 +85,7 @@
                                 X
                             </td>
                             <td>
-                                <input id="txtPredictionX" type="text" style="width:80px; color: red;">
+                                <input id="txtPredictionX" type="text" style="width:80px; color: red;font-size: 30px;font-weight: bold;">
                             </td>
                             <td>
                                 <input type="button" value="Predict" onclick="predictY()">
@@ -96,7 +96,7 @@
                                 Y
                             </td>
                             <td>
-                                <input id="txtPredictionY" type="text" style="width:80px; color: red;">
+                                <input id="txtPredictionY" type="text" style="width:80px; color: red;font-size: 30px;font-weight: bold;">
                             </td>
                             <td>
                                 <input type="button" value="Add" onclick="addXYToData()">
@@ -115,13 +115,6 @@
                     <td>
                         <div style="border: 1px solid #ccc; margin:5px; padding:5px;">
                             <table border="0">
-                                <tr>
-                                    <td colspan="4">
-                                        <input onclick="refreshSettings()" style="width:200px; height:40px;"
-                                            type="button" value="Refresh" />
-                                        <hr>
-                                    </td>
-                                </tr>
                                 <tr>
                                     <td>
                                         Max-X:
@@ -197,6 +190,13 @@
             </table>
 
         </div>
+        <div style="border: 1px solid #ccc; margin: 10px;">
+            <div style="padding: 10px;">
+                <input onclick="refreshSettings()" style="width:200px; height:40px;" type="button" value="Refresh" />
+                <input onclick="resetData()" style="width:200px; height:40px;" type="button" value="Reset Data" />
+            </div>
+        </div>
+        
     </div>
 </body>
 

@@ -68,7 +68,7 @@ function resetData(){
     $("#txtPredictionY").val("");
 }
 
-function updateData() {
+function updateSampleData() {
     data = [];
     slop = 0;
     yIntercept = 0;
@@ -86,6 +86,11 @@ function updateData() {
             addInputData(x, y, false); 
         }
     }
+}
+
+function refreshSettingsButtonClick(){
+    updateSampleData();
+    refreshSettings();
 }
 
 function refreshSettings() {

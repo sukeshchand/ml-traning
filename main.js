@@ -1,8 +1,8 @@
 
 
 var isMousePressInputAccept = false;
-var isComputeLinearRegression = true;
-var isComputeLinearRegressionGD = true;
+var isComputeLinearRegression = false;
+var isComputeLinearRegressionGD = false;
 var isDrawLine = true;
 var isShowXAndYAxis = false;
 var isShowXAndYText = false;
@@ -12,7 +12,7 @@ function setup() {
     var canvas = createCanvas(maxCanvasX, maxCanvasY);
     canvas.parent('divCanvas');
     background(canvasBackground);
-    defaultTestValues();
+    setDefaultValues();
     fillInputs();
     setupEvents();
 }
@@ -59,6 +59,7 @@ function mousePressed() {
 }
 
 function resetData(){
+    setDefaultValues();
     data = [];
     slop = 0;
     yIntercept = 0;
@@ -101,6 +102,9 @@ function refreshSettings() {
     isMousePressInputAccept = $('#chkMousePressInputAccept').prop('checked');
     learning_rate = $("#txtLearningRate").val();
     $("#spanLearningRate").text(learning_rate);
+    slop =  Number($("#txtSlop").val());
+    yIntercept = Number($("#txtYIntercept").val());
+    drawLine();
 }
 
 function fillInputs() {
@@ -124,19 +128,24 @@ function fillInputs() {
     $("#txtData").val(dataString);
     $("#learning_rate").val(learning_rate);
     $("#spanLearningRate").text(learning_rate);
+
+    $("#txtSlop").val(slop);
+    $("#txtYIntercept").val(yIntercept);
+
     
 }
 
-function defaultTestValues() {
-    maxX = 50;
+function setDefaultValues() {
+    maxX = 100;
     maxY = 100;
-
-    xText = "Tempeature"
-    yText = "Ice cream sales count"
-    isShowXAndYAxis = true;
-    isShowXAndYText = true;
-    isDrawLine = true;
-    isMousePressInputAccept = true;
+    xText = ""
+    yText = ""
+    isShowXAndYAxis = false;
+    isShowXAndYText = false;
+    isDrawLine = false;
+    isMousePressInputAccept = false;
+    isComputeLinearRegression = false;
+    isComputeLinearRegressionGD = false;
 }
 
 function draw() {
@@ -219,7 +228,7 @@ function addXYToData() {
 }
 
 function drawLine() {
-    if (slop == 0 && yIntercept == 0) return;
+    //if (slop == 0 && yIntercept == 0) return;
     var x1 = 0;
     var y1 = getPointY(slop, x1, yIntercept);
 

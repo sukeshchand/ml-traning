@@ -1,4 +1,6 @@
 var data = [];
+var weights = [];
+
 var slop = 0;
 var yIntercept = 0;
 
@@ -12,14 +14,14 @@ var maxX = 50;
 var maxY = 100;
 
 var xText = "";
-var yText = ""; 
+var yText = "";
 
 var learning_rate = ".01";
 
 function linearRegression() {
     var xSum = 0;
     var ySum = 0;
-    for (i = 0; i < data.length; i++) {
+    for (var i = 0; i < data.length; i++) {
         xSum += data[i].x;
         ySum += data[i].y;
     }
@@ -29,7 +31,7 @@ function linearRegression() {
     // find numerator and denominator
     var numerator = 0;
     var denominator = 0;
-    for (i = 0; i < data.length; i++) {
+    for (var i = 0; i < data.length; i++) {
         var x = data[i].x;
         var y = data[i].y;
         numerator += (x - xMean) * (y - yMean);
@@ -44,8 +46,8 @@ function linearRegression() {
     refreshAIModel();
 }
 
-function linearRegressionGradientDescent (){
-    for (i = 0; i < data.length; i++) {
+function linearRegressionGradientDescent() {
+    for (var i = 0; i < data.length; i++) {
         x = data[i].x;
         y = data[i].y;
         var guess = slop * x + yIntercept;
@@ -55,3 +57,62 @@ function linearRegressionGradientDescent (){
     }
     refreshAIModel();
 }
+
+//---------------------------------- Perceptron - Start--------------------------------
+var perceptron = {};
+perceptron.init = function (weightsParam) {
+    weightsParam = new Array(2);
+    // init random weights
+    for (var i = 0; i < weightsParam.length; i++) {
+        weightsParam[i] = random(-1, 1);
+    }
+    return weightsParam;
+};
+
+// activation function
+perceptron.sign = function sign(n) {
+    if (n >= 0) {
+        return 1;
+    } else {
+        return -1;
+    }
+};
+
+perceptron.guess = function guess(inputsParam, weightsParam) {
+    var sum = 0;
+    for (var indexWeightParam = 0; indexWeightParam < weightsParam.length; indexWeightParam++) {
+        sum = sum + inputsParam[indexWeightParam] * weightsParam[indexWeightParam];
+    }
+    var output = this.sign(sum);
+    return output;
+};
+
+perceptron.train = function(inputParam, weightsParam, actualAnswer){
+    var guessValue = this.guess(inputParam, weights);
+    var error = actualAnswer - guessValue;
+    
+    // Tune all the weights
+    for (var indexWeight = 0; indexWeight < weightsParam.length; indexWeight++) {
+        weightsParam[indexWeight] += error * inputParam[indexWeight] * learning_rate ;
+    }
+    return weightsParam;
+};
+
+
+function trainData() {
+    trainAllDataUsingNeuralNetworksPerceptron();
+}
+
+function trainAllDataUsingNeuralNetworksPerceptron(){
+    for (var indexData = 0; indexData < data.length; indexData++) {
+        var inputs = [];
+        inputs.push(data[indexData].x);
+        inputs.push(data[indexData].y);
+        actualAnswer = data[indexData].z;
+        weights = perceptron.train(inputs, weights, actualAnswer);   
+        refreshAIModel();
+    }
+}
+
+
+//---------------------------------- Perceptron - End--------------------------------

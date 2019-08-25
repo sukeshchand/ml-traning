@@ -65,6 +65,7 @@ function resetData(){
     data = [];
     slop = 0;
     yIntercept = 0;
+    weights = perceptron.init(weights);
     fillInputs();
     $("#txtPredictionX").val("");
     $("#txtPredictionY").val("");
@@ -72,11 +73,12 @@ function resetData(){
 
 function updateSampleData() {
     data = [];
+    weights = perceptron.init(weights);
     slop = 0;
     yIntercept = 0;
 
     var strData = $("#txtData").val().split("\n");
-    for (i = 0; i < strData.length; i++) {
+    for (var i = 0; i < strData.length; i++) {
         var strData2 = strData[i].split(",");
         if(strData2.length < 2 || isNaN(strData2[0]) || isNaN(strData2[1])) continue;
         var x = map(Number(strData2[0]), 0, maxX, 0, width);
@@ -116,11 +118,13 @@ function refreshSettings() {
     $("#spanLearningRate").text(learning_rate);
     slop =  Number($("#txtSlop").val());
     yIntercept = Number($("#txtYIntercept").val());
+    weights[0] = Number($("#txtWeight0").val());
+    weights[1] = Number($("#txtWeight1").val());
     drawLine();
 }
 
 function fillInputs() {
-    $("#txtMaxX").val(maxX)
+    $("#txtMaxX").val(maxX);
     $("#txtMaxY").val(maxY);
 
     $("#txtXText").val(xText);
@@ -133,7 +137,7 @@ function fillInputs() {
     $('#chkNeuralNetworksPerceptron').prop('checked', isNeuralNetworksPerceptron);
     $('#chkMousePressInputAccept').prop('checked', isMousePressInputAccept);
     var dataString = "";
-    for (i = 0; i < data.length; i++) {
+    for (var i = 0; i < data.length; i++) {
         var xMapped = map(data[i].x, 0, 1, 0, maxX) | 0;
         var yMapped = map(data[i].y, 1, 0, maxY, 0) | 0;
         var z = "";
@@ -148,6 +152,8 @@ function fillInputs() {
 
     $("#txtSlop").val(slop);
     $("#txtYIntercept").val(yIntercept);
+    $("#txtWeight0").val(weights[0]);
+    $("#txtWeight1").val(weights[1]);
 
     
 }
@@ -155,8 +161,9 @@ function fillInputs() {
 function setDefaultValues() {
     maxX = 100;
     maxY = 100;
-    xText = ""
-    yText = ""
+    xText = "";
+    yText = "";
+    weights = perceptron.init(weights);
     isShowXAndYAxis = false;
     isShowXAndYText = false;
     isDrawLine = false;
@@ -168,7 +175,7 @@ function setDefaultValues() {
 
 function draw() {
     background(canvasBackground);
-    for (i = 0; i < data.length; i++) {
+    for (var i = 0; i < data.length; i++) {
         var x = map(data[i].x, 0, 1, 0, width);
         var y = map(data[i].y, 0, 1, height, 0);
         var label = "";
@@ -219,7 +226,9 @@ function draw() {
         linearRegressionGradientDescent();
     }
     else if(isNeuralNetworksPerceptron){
-
+        if($('#chkNeuralNetworksPerceptronLive').prop('checked')){
+            trainAllDataUsingNeuralNetworksPerceptron();
+        }
     }
     if (isDrawLine) {
         drawLine();
@@ -269,8 +278,8 @@ function predictY() {
 
 
 function addXYToData() {
-    var x = Number($("#txtPredictionX").val())
-    var y = Number($("#txtPredictionY").val())
+    var x = Number($("#txtPredictionX").val());
+    var y = Number($("#txtPredictionY").val());
     var xPre = map(x, 0, maxX, 0, width);
     var yPre = map(y, 0, maxY, height, 0);
     addInputData(xPre, yPre, null, true);
@@ -300,6 +309,9 @@ function refreshAIModel() {
 
     $("#txtSlop").val(tmpSlop.toFixed(2));
     $("#txtYIntercept").val(tmpYIntercept.toFixed(2));
+
+    $("#txtWeight0").val(weights[0]);
+    $("#txtWeight1").val(weights[1]);
 }
 
 function getPointY(slopParam, xParam, bParam) {

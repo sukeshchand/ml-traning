@@ -52,7 +52,8 @@
                                 Slop(m):
                             </td>
                             <td>
-                                <input id="txtSlop" type="text" style="width:100px; color: red;font-size: 30px;font-weight: bold;">
+                                <input id="txtSlop" type="text"
+                                    style="width:150px; color: red;font-size: 30px;font-weight: bold; text-align: center;">
                             </td>
                         </tr>
                         <tr>
@@ -60,16 +61,47 @@
                                 YIntercept(b):
                             </td>
                             <td>
-                                <input id="txtYIntercept" type="text" style="width:100px; color: red;font-size: 30px;font-weight: bold;">
+                                <input id="txtYIntercept" type="text"
+                                    style="width:150px; color: red;font-size: 30px;font-weight: bold;text-align: center;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <hr>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                    Learning rate:
+                                Weight-0:
                             </td>
                             <td>
-                                <input style="width:150px;" type="range" id="txtLearningRate" min="0.01" max="0.5" value=".05" step=".01" >
-                                <span id="spanLearningRate" style="color: red;font-size: 30px;font-weight: bold;    "></span>
+                                <input id="txtWeight0" type="text"
+                                    style="width:150px; color: red;font-size: 30px;font-weight: bold;text-align: center;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Weight-1:
+                            </td>
+                            <td>
+                                <input id="txtWeight1" type="text"
+                                    style="width:150px; color: red;font-size: 30px;font-weight: bold;text-align: center;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <hr>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Learning rate:
+                            </td>
+                            <td>
+                                <input style="width:150px;" type="range" id="txtLearningRate" min="0.01" max="0.5"
+                                    value=".05" step=".01">
+                                <span id="spanLearningRate"
+                                    style="color: red;font-size: 30px;font-weight: bold;    "></span>
                             </td>
 
                         </tr>
@@ -83,10 +115,11 @@
                                 X
                             </td>
                             <td>
-                                <input id="txtPredictionX" type="text" style="width:80px; color: red;font-size: 30px;font-weight: bold;">
+                                <input id="txtPredictionX" type="text"
+                                    style="width:150px; color: red;font-size: 30px;font-weight: bold;text-align: center;">
                             </td>
                             <td>
-                                <input type="button" value="Predict" onclick="predictY()">
+                                <input type="button" value="Predict" style="width: 76px;height: 40px;" onclick="predictY()">
                             </td>
                         </tr>
                         <tr>
@@ -94,10 +127,11 @@
                                 Y
                             </td>
                             <td>
-                                <input id="txtPredictionY" type="text" style="width:80px; color: red;font-size: 30px;font-weight: bold;">
+                                <input id="txtPredictionY" type="text"
+                                    style="width:150px; color: red;font-size: 30px;font-weight: bold;text-align: center;">
                             </td>
                             <td>
-                                <input type="button" value="Add" onclick="addXYToData()">
+                                <input type="button" style="width: 76px;height: 40px;" value="Add" onclick="addXYToData()">
                             </td>
                         </tr>
                     </table>
@@ -179,7 +213,9 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="checkbox" id="chkNeuralNetworksPerceptron">Neural Networks - Perceptron
+                                        <input type="checkbox" id="chkNeuralNetworksPerceptron">Neural Networks -
+                                        Perceptron
+                                        <input type="checkbox" id="chkNeuralNetworksPerceptronLive"> Live
                                     </td>
                                 </tr>
                             </table>
@@ -195,11 +231,19 @@
         </div>
         <div style="border: 1px solid #ccc; margin: 10px;">
             <div style="padding: 10px;">
-                <input onclick="refreshSettingsButtonClick()" style="width:200px; height:40px;" type="button" value="Refresh" />
+                <input onclick="refreshSettingsButtonClick()" style="width:200px; height:40px;" type="button"
+                    value="Refresh" />
                 <input onclick="resetData()" style="width:200px; height:40px;" type="button" value="Reset Data" />
+                <input onclick="trainData()" style="width:200px; height:40px;" type="button" value="Train Data" />
+            </div>
+
+        </div>
+        <div style="border: 1px solid #ccc; margin: 10px;">
+            <div style="padding: 10px;">
+                <span id="spanMsg"></span>
             </div>
         </div>
-        
+
     </div>
 </body>
 

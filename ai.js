@@ -88,6 +88,7 @@ perceptron.guess = function guess(inputsParam, weightsParam) {
 };
 
 perceptron.train = function(inputParam, weightsParam, actualAnswer){
+    if(!actualAnswer) return weightsParam;
     var guessValue = this.guess(inputParam, weights);
     var error = actualAnswer - guessValue;
     
@@ -108,7 +109,7 @@ function trainAllDataUsingNeuralNetworksPerceptron(){
         var inputs = [];
         inputs.push(data[indexData].x);
         inputs.push(data[indexData].y);
-        actualAnswer = data[indexData].z;
+        actualAnswer = data[indexData].label;
         weights = perceptron.train(inputs, weights, actualAnswer);   
         refreshAIModel();
     }

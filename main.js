@@ -1,5 +1,3 @@
-
-
 var isMousePressInputAccept = false;
 var isComputeLinearRegression = false;
 var isComputeLinearRegressionGD = false;
@@ -46,8 +44,13 @@ function addInputData(xParam, yParam, label, refreshDataView) {
     var xMapped = map(mouseX, 0, width, 0, maxX) | 0;
     var yMapped = map(mouseY, 0, height, maxY, 0) | 0;
 
-    var point = createVector(x, y, label);
-    data.push(point);
+    //var point = createVector(x, y, label);
+    var item = {
+        x : x,
+        y : y,
+        label : label
+    };
+    data.push(item);
     if (refreshDataView) {
         appendToTable("#tableData", xMapped, yMapped);
         fillInputs();
@@ -60,7 +63,7 @@ function mousePressed() {
     addInputData(mouseX, mouseY, null, true);
 }
 
-function resetData(){
+function resetData() {
     setDefaultValues();
     data = [];
     slop = 0;
@@ -80,23 +83,22 @@ function updateSampleData() {
     var strData = $("#txtData").val().split("\n");
     for (var i = 0; i < strData.length; i++) {
         var strData2 = strData[i].split(",");
-        if(strData2.length < 2 || isNaN(strData2[0]) || isNaN(strData2[1])) continue;
+        if (strData2.length < 2 || isNaN(strData2[0]) || isNaN(strData2[1])) continue;
         var x = map(Number(strData2[0]), 0, maxX, 0, width);
-        var y = map(Number(strData2[1]),0, maxY, height, 0);
+        var y = map(Number(strData2[1]), 0, maxY, height, 0);
         var label = "";
-        if(strData2.length == 3){
-            label = Number(strData2[2]); 
+        if (strData2.length == 3) {
+            label = Number(strData2[2]);
         }
-        if(i + 1 == strData.length){
-            addInputData(x, y, label, true); 
-        }
-        else{
-            addInputData(x, y, label, false); 
+        if (i + 1 == strData.length) {
+            addInputData(x, y, label, true);
+        } else {
+            addInputData(x, y, label, false);
         }
     }
 }
 
-function refreshSettingsButtonClick(){
+function refreshSettingsButtonClick() {
     updateSampleData();
     refreshSettings();
 }
@@ -116,7 +118,7 @@ function refreshSettings() {
     isMousePressInputAccept = $('#chkMousePressInputAccept').prop('checked');
     learning_rate = $("#txtLearningRate").val();
     $("#spanLearningRate").text(learning_rate);
-    slop =  Number($("#txtSlop").val());
+    slop = Number($("#txtSlop").val());
     yIntercept = Number($("#txtYIntercept").val());
     weights[0] = Number($("#txtWeight0").val());
     weights[1] = Number($("#txtWeight1").val());
@@ -140,11 +142,11 @@ function fillInputs() {
     for (var i = 0; i < data.length; i++) {
         var xMapped = map(data[i].x, 0, 1, 0, maxX) | 0;
         var yMapped = map(data[i].y, 1, 0, maxY, 0) | 0;
-        var z = "";
-        if(data[i].z != 0){
-            z = "," + data[i].z;
+        var label = "";
+        if (data[i].label) {
+            label = "," + data[i].label;
         }
-        dataString += xMapped + "," + yMapped + z + "\n";
+        dataString += xMapped + "," + yMapped + label + "\n";
     }
     $("#txtData").val(dataString);
     $("#learning_rate").val(learning_rate);
@@ -155,7 +157,7 @@ function fillInputs() {
     $("#txtWeight0").val(weights[0]);
     $("#txtWeight1").val(weights[1]);
 
-    
+
 }
 
 function setDefaultValues() {
@@ -179,54 +181,55 @@ function draw() {
         var x = map(data[i].x, 0, 1, 0, width);
         var y = map(data[i].y, 0, 1, height, 0);
         var label = "";
-        if(isNeuralNetworksPerceptron){
-            if(data[i].z != 0){
-                label = data[i].z;
-            }
-            else{
-                label = "";
-            }
+        if (isNeuralNetworksPerceptron) {
+            label = data[i].label;
             strokeWeight(3);
             fill(canvasBackground);
             stroke("white");
             ellipse(x, y, 15, 15);
             textSize(18);
-            if(label == 1){
+            if (label == 1) {
                 fill("white");
                 stroke("red");
-            }
-            else{
+            } else {
                 fill("white");
                 stroke("green");
             }
-            
-            text(label, x+11, y+11);
-        }
-        else{
+            if(!label){
+                fill("white");
+                stroke("blue"); 
+                
+                var inputs = [];
+                inputs.push(data[i].x);
+                inputs.push(data[i].y);
+                var guessedValue = perceptron.guess(inputs, weights);
+
+                label="g: " + guessedValue;
+            }
+            text(label, x + 11, y + 11);
+        } else {
             fill(255);
             stroke("white");
             ellipse(x, y, 8, 8);
         }
-        
-    }
-   
 
+    }
+
+
+    strokeWeight(5);
     //draw line X & y
     if (isShowXAndYAxis) {
         stroke("cyan");
-        strokeWeight(5);
         line(marginLineX, maxCanvasY - marginLineX, (maxCanvasX - marginLineX), (maxCanvasY - marginLineY));
         line(marginLineX, marginLineY, marginLineX, (maxCanvasY - marginLineY));
     }
 
     if (isComputeLinearRegression) {
         linearRegression();
-    }
-    else if (isComputeLinearRegressionGD) {
+    } else if (isComputeLinearRegressionGD) {
         linearRegressionGradientDescent();
-    }
-    else if(isNeuralNetworksPerceptron){
-        if($('#chkNeuralNetworksPerceptronLive').prop('checked')){
+    } else if (isNeuralNetworksPerceptron) {
+        if ($('#chkNeuralNetworksPerceptronLive').prop('checked')) {
             trainAllDataUsingNeuralNetworksPerceptron();
         }
     }

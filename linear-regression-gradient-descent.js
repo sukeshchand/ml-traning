@@ -1,5 +1,3 @@
-
-
 // Linear Regression with Gradient Descent
 function linearRegressionGradientDescent() {
     for (var i = 0; i < data.length; i++) {

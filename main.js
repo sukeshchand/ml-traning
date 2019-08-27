@@ -224,9 +224,11 @@ function draw() {
     strokeWeight(5);
     //draw line X & y
     if (isShowXAndYAxis) {
-        stroke("cyan");
-        line(marginLineX, maxCanvasY - marginLineX, (maxCanvasX - marginLineX), (maxCanvasY - marginLineY));
-        line(marginLineX, marginLineY, marginLineX, (maxCanvasY - marginLineY));
+        strokeWeight(8);
+        stroke("#4000ff");
+        line(2, maxCanvasY - 2, (maxCanvasX - 2), (maxCanvasY - 2));
+        line(2, 2, 2, (maxCanvasY - 2));
+        strokeWeight(5);
     }
 
     if (isComputeLinearRegression) {

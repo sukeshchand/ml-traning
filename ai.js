@@ -52,10 +52,6 @@ perceptron.train = function(inputParam, weightsParam, actualAnswer){
     var guessValue = this.guess(inputParam, weights);
     var error = actualAnswer - guessValue;
     
-    //var x = map(inputParam[0], 0, 1, 0, width);
-    //var y = map(inputParam[1], 0, 1, height, 0);
-    //ellipse(x, y, 25, 25);
-    
     // Tune all the weights
     for (var indexWeight = 0; indexWeight < weightsParam.length; indexWeight++) {
         weightsParam[indexWeight] += error * inputParam[indexWeight] * learning_rate ;

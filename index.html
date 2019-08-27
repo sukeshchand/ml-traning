@@ -7,6 +7,8 @@
     <script language="javascript" type="text/javascript" src="libraries/jquery.min.js"></script>
     <script language="javascript" type="text/javascript" src="main.js"></script>
     <script language="javascript" type="text/javascript" src="ai.js"></script>
+    <script language="javascript" type="text/javascript" src="linear-regression-ordinary-least-squares.js"></script>
+    <script language="javascript" type="text/javascript" src="linear-regression-gradient-descent.js"></script>
     <style>
         #tableData th,
         td {
@@ -52,8 +54,20 @@
                                 Slop(m):
                             </td>
                             <td>
-                                <input id="txtSlop" type="text"
-                                    style="width:150px; color: red;font-size: 30px;font-weight: bold; text-align: center;">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input id="txtSlop" type="text"
+                                                style="width:150px; color: red;font-size: 30px;font-weight: bold; text-align: center;">
+                                        </td>
+                                        <td>
+                                            <span id="spanSlop"
+                                                style="color: red;font-size: 19px;font-weight: bold;"></span>
+                                        </td>
+                                    </tr>
+                                </table>
+
+
                             </td>
                         </tr>
                         <tr>
@@ -61,8 +75,19 @@
                                 YIntercept(b):
                             </td>
                             <td>
-                                <input id="txtYIntercept" type="text"
-                                    style="width:150px; color: red;font-size: 30px;font-weight: bold;text-align: center;">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input id="txtYIntercept" type="text"
+                                                style="width:150px; color: red;font-size: 30px;font-weight: bold;text-align: center;">
+                                        </td>
+                                        <td>
+                                                <span id="spanYIntercept"
+                                                style="color: red;font-size: 19px;font-weight: bold;"></span>
+                                        <td>
+                                    </tr>
+                                </table>
+
                             </td>
                         </tr>
                         <tr>
@@ -119,7 +144,8 @@
                                     style="width:150px; color: red;font-size: 30px;font-weight: bold;text-align: center;">
                             </td>
                             <td>
-                                <input type="button" value="Predict" style="width: 76px;height: 40px;" onclick="predictY()">
+                                <input type="button" value="Predict" style="width: 76px;height: 40px;"
+                                    onclick="predictY()">
                             </td>
                         </tr>
                         <tr>
@@ -131,7 +157,8 @@
                                     style="width:150px; color: red;font-size: 30px;font-weight: bold;text-align: center;">
                             </td>
                             <td>
-                                <input type="button" style="width: 76px;height: 40px;" value="Add" onclick="addXYToData()">
+                                <input type="button" style="width: 76px;height: 40px;" value="Add"
+                                    onclick="addXYToData()">
                             </td>
                         </tr>
                     </table>

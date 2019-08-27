@@ -82,6 +82,7 @@ function updateSampleData() {
 
     var strData = $("#txtData").val().split("\n");
     for (var i = 0; i < strData.length; i++) {
+        strData[i] = strData[i].replace('\t',',');
         var strData2 = strData[i].split(",");
         if (strData2.length < 2 || isNaN(strData2[0]) || isNaN(strData2[1])) continue;
         var x = map(Number(strData2[0]), 0, maxX, 0, width);
@@ -153,7 +154,11 @@ function fillInputs() {
     $("#spanLearningRate").text(learning_rate);
 
     $("#txtSlop").val(slop);
+    var slopMapped = map(slop,0, maxX, 0, 1);
+    //$("#spanSlop").text(slopMapped);
     $("#txtYIntercept").val(yIntercept);
+    var yMapped = map(slop,0, maxY, 0, 1);
+    //$("#spanYIntercept").text(yMapped);
     $("#txtWeight0").val(weights[0]);
     $("#txtWeight1").val(weights[1]);
 
@@ -225,7 +230,7 @@ function draw() {
     }
 
     if (isComputeLinearRegression) {
-        linearRegression();
+        linearRegressionWithOrdinaryLeastSqures();
     } else if (isComputeLinearRegressionGD) {
         linearRegressionGradientDescent();
     } else if (isNeuralNetworksPerceptron) {
@@ -307,11 +312,16 @@ function drawLine() {
 }
 
 function refreshAIModel() {
-    var tmpSlop = map(slop, 0, 1, 0, maxX);
+    
+    //$("#spanSlop").text(slop);
+    //var tmpSlop = map(slop, 0, 1, 0, maxX);
+    $("#txtSlop").val(slop.toFixed(2));
+    
+    
+    
     var tmpYIntercept = map(yIntercept, 0, 1, 0, maxY);
-
-    $("#txtSlop").val(tmpSlop.toFixed(2));
     $("#txtYIntercept").val(tmpYIntercept.toFixed(2));
+    //$("#spanYIntercept").text(yIntercept);
 
     $("#txtWeight0").val(weights[0]);
     $("#txtWeight1").val(weights[1]);

@@ -1,3 +1,21 @@
+// Example data
+/*
+Temperature     Sales count
+9	            29
+13	            35
+19	            38
+24	            43
+24	            49
+31	            46
+28	            52
+35          	51
+35	            56
+39	            59
+43	            60
+46	            64
+44	            69
+51	            70
+*/
 
 //Linear regression using - ordinary least squares
 function linearRegressionWithOrdinaryLeastSqures() {
@@ -5,11 +23,11 @@ function linearRegressionWithOrdinaryLeastSqures() {
     var xSum = 0;
     var ySum = 0;
     for (var i = 0; i < data.length; i++) {
-        xSum += data[i].x;
-        ySum += data[i].y;
+        xSum += data[i].x;  // Temperature
+        ySum += data[i].y;  // sales count
     }
     
-    // calculate the mean of x and y
+    // calculate the mean(average) of x and y
     var xMean = xSum / data.length;
     var yMean = ySum / data.length;
 

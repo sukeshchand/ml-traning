@@ -3,8 +3,8 @@ var isComputeLinearRegression = false;
 var isComputeLinearRegressionGD = false;
 var isNeuralNetworksPerceptron = false;
 var isDrawLine = true;
-var isShowXAndYAxis = false;
-var isShowXAndYText = false;
+var isShowXAndYAxis = true;
+var isShowXAndYText = true;
 var canvasBackground = "gray";
 
 function setup() {
@@ -171,8 +171,8 @@ function setDefaultValues() {
     xText = "";
     yText = "";
     weights = perceptron.init(weights);
-    isShowXAndYAxis = false;
-    isShowXAndYText = false;
+    isShowXAndYAxis = true;
+    isShowXAndYText = true;
     isDrawLine = false;
     isMousePressInputAccept = false;
     isComputeLinearRegression = false;
@@ -255,7 +255,7 @@ function draw() {
         stroke(canvasBackground);
         fill(255);
         textSize(25);
-        text('0', marginLineX - 15, maxCanvasY - marginLineX + 20);
+        text('0', 9, maxCanvasY-9);
         text(xText + " ------>  (Max value:" + maxX + ")", marginLineX + marginLineY, maxCanvasY - 20);
 
         fill(255);
